@@ -1,6 +1,8 @@
 import cv2
 import math
+#import numpy as np
 from flask_cors import CORS
+#from tensorflow import keras
 from skimage.transform import resize
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
