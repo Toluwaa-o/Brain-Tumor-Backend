@@ -1,6 +1,6 @@
-#import cv2
+import cv2
 import math
-#import numpy as np
+import numpy as np
 from flask_cors import CORS
 #from tensorflow import keras
 from flask import Flask, jsonify, request
