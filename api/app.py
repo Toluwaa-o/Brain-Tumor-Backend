@@ -2,7 +2,7 @@ import cv2
 import math
 import numpy as np
 from flask_cors import CORS
-#from tensorflow import keras
+from tensorflow import keras
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
