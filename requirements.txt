@@ -2,6 +2,6 @@ Flask
 flask-cors
 opencv-python-headless
 numpy
-#tensorflow-cpu
+tensorflow.keras.models
 gunicorn
 Werkzeug
