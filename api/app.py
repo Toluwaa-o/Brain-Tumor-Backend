@@ -80,12 +80,3 @@ def test():
 #         }), 200
 #     except Exception as e:
 #         return "An error occurred during image processing: {}".format(e), 500
-
-if __name__ == '__main__':
-    port = os.environ.get('PORT')
-    if port:
-        port = int(port)
-    else:
-        port = 5000
-
-    app.run(debug=True, port=port)
