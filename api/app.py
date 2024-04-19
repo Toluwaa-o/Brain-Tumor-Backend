@@ -1,6 +1,7 @@
-import cv2
+# import cv2
 import math
 import numpy as np
+from PIL import Image
 from flask_cors import CORS
 from tensorflow import keras
 from flask import Flask, jsonify, request
@@ -66,11 +67,13 @@ def submit_and_classify():
 
     try:
         req_data = request.json
-        new_img = cv2.imread(req_data['img'])
+        #new_img = cv2.imread(req_data['img'])
+        new_img = Image.open(req_data['img'])
         if new_img is None:
             return jsonify(({"failed": "Failed to read image file"})), 500
 
-        new_img = cv2.resize(new_img, (128, 128))
+        #new_img = cv2.resize(new_img, (128, 128))
+        new_img = new_img.resize((128, 128))
         new_img = np.expand_dims(new_img, axis=0)
 
         pred = model(new_img)
@@ -82,3 +85,6 @@ def submit_and_classify():
         }), 200
     except Exception as e:
         return "An error occurred during image processing: {}".format(e), 500
+
+if __name__ == "__main__":
+    app.run(debug=True)
