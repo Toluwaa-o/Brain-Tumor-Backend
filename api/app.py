@@ -3,7 +3,6 @@ import math
 #import numpy as np
 from flask_cors import CORS
 #from tensorflow import keras
-#from skimage.transform import resize
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
@@ -68,7 +67,7 @@ def test():
 #         if new_img is None:
 #             return jsonify(({"failed": "Failed to read image file"})), 500
 
-#         new_img = resize(new_img, (128, 128, 3))
+#         new_img = cv2.resize(new_img, (128, 128))
 #         new_img = np.expand_dims(new_img, axis=0)
 
 #         pred = model(new_img)
