@@ -1,4 +1,4 @@
-# Brain Tumor Detection
+# Brain Tumor Detection Backend
 
 ### By: [Ogunleye Toluwalashe](http://github.com/Toluwaa-o)
 ### Tools: TensorFlow, Python, Flask, Keras, e.t.c
