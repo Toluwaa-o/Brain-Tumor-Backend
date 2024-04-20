@@ -71,18 +71,16 @@ def submit_and_classify():
         new_img = np.expand_dims(new_img, axis=0)
 
         pred = model(new_img)
-        print(pred)
 
         threshold = 0.5
 
-        if pred[0][0] >= threshold:
+        if pred[0][0].numpy().item() >= threshold:
             classification = 1  # Positive class
             probability = pred[0][0].numpy().item()
         else:
             classification = 0  # Negative class
             probability = 1 - pred[0][0].numpy().item()
 
-        print(classification)
         verdict = 'This brain scan contains a tumor' if classification == 1 else 'This brain scan does not contain a tumor'
 
         return jsonify({"result": verdict, "probability": probability}), 200
