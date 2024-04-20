@@ -1,8 +1,6 @@
-# import cv2
+import cv2
 import math
-import asyncio
 import numpy as np
-from PIL import Image
 from flask_cors import CORS
 from tensorflow import keras
 from flask import Flask, jsonify, request
@@ -45,7 +43,7 @@ def uploadImage():
         return "An error occurred during image processing: {}".format(e), 500
 
 @app.route('/classify', methods=['POST'])
-async def submit_and_classify():
+def submit_and_classify():
     """
     Process an uploaded brain scan image to classify whether it contains a tumor or not.
     This function expects a POST request with json data containing the path to a brain scan image.
@@ -66,15 +64,14 @@ async def submit_and_classify():
 
     try:
         req_data = request.json
-        new_img = Image.open(req_data['img'])
+        new_img = cv2.imread(req_data['img'])
         if new_img is None:
             return jsonify({"failed": "Failed to read image file"}), 500
 
-        new_img = new_img.resize((128, 128))
+        new_img = cv2.resize(new_img, (128, 128))
         new_img = np.expand_dims(new_img, axis=0)
 
-        loop = asyncio.get_event_loop()
-        pred = await loop.run_in_executor(None, model, new_img)
+        pred = model(new_img)
 
         classification = math.ceil(pred[0][0] / 100)
         verdict = 'This brain scan contains a tumor' if classification == 1 else 'This brain scan does not contain a tumor'
