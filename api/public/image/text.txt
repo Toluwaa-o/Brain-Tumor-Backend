@@ -1,1 +1,0 @@
-This folder will hold images uploaded. Images uploaded will be saved here and then read into the model from here
