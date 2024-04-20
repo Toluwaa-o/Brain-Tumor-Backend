@@ -73,7 +73,7 @@ def submit_and_classify():
         pred = model(new_img)
         print(pred)
 
-        threshold = 0.5
+        threshold = 0.6
 
         if pred[0][0] >= threshold:
             classification = 1  # Positive class
@@ -83,7 +83,7 @@ def submit_and_classify():
         print(classification)
         verdict = 'This brain scan contains a tumor' if classification == 1 else 'This brain scan does not contain a tumor'
 
-        return jsonify({"result": verdict}), 200
+        return jsonify({"result": verdict, "probability": pred[0][0]}), 200
     except Exception as e:
         return "An error occurred during image processing: {}".format(e), 500
 
