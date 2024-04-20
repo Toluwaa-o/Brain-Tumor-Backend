@@ -1,5 +1,4 @@
 import cv2
-import math
 import numpy as np
 from flask_cors import CORS
 from tensorflow import keras
@@ -72,8 +71,16 @@ def submit_and_classify():
         new_img = np.expand_dims(new_img, axis=0)
 
         pred = model(new_img)
+        print(pred)
 
-        classification = math.ceil(pred[0][0] / 100)
+        threshold = 0.5
+
+        if pred[0][0] >= threshold:
+            classification = 1  # Positive class
+        else:
+            classification = 0  # Negative class
+
+        print(classification)
         verdict = 'This brain scan contains a tumor' if classification == 1 else 'This brain scan does not contain a tumor'
 
         return jsonify({"result": verdict}), 200
