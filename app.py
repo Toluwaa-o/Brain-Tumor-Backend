@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='public', static_url_path='/public')
 CORS(app)
-model = keras.models.load_model('Brain_Tumor_Model.kerasz')
+model = keras.models.load_model('Brain_Tumor_Model.keras')
 
 @app.route('/')
 def test():
