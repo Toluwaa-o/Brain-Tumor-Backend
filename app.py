@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from flask_cors import CORS
+import tensorflow as tf
 from tensorflow import keras
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
@@ -73,13 +74,12 @@ def submit_and_classify():
         pred = model(new_img)
 
         threshold = 0.5
+        probability = tf.nn.sigmoid(pred).numpy().item()
 
-        if pred[0][0].numpy().item() >= threshold:
+        if probability >= threshold:
             classification = 1  # Positive class
-            probability = pred[0][0].numpy().item()
         else:
             classification = 0  # Negative class
-            probability = 1 - pred[0][0].numpy().item()
 
         verdict = 'This brain scan contains a tumor' if classification == 1 else 'This brain scan does not contain a tumor'
 
