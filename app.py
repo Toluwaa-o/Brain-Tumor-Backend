@@ -8,11 +8,11 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='public', static_url_path='/public')
 CORS(app)
-model = keras.models.load_model('Brain_Tumor_Model.keras')
+model = keras.models.load_model('Brain_Tumor_Model.kerasz')
 
 @app.route('/')
 def test():
-    return jsonify({'/classify': "Use this route to submit images, the response is the classification."})
+    return jsonify({"/submit_image": "Use this route to upload image, the response is the stored image path.", '/classify': "Use this route to submit image path, the response is the classification."})
 
 @app.route('/submit_image', methods=['POST'])
 def uploadImage():
@@ -73,17 +73,11 @@ def submit_and_classify():
 
         pred = model(new_img)
 
-        threshold = 0.5
-        probability = tf.nn.sigmoid(pred).numpy().item()
-
-        if probability >= threshold:
-            classification = 1  # Positive class
-        else:
-            classification = 0  # Negative class
+        classification = tf.nn.sigmoid(pred).numpy().item()
 
         verdict = 'This brain scan contains a tumor' if classification == 1 else 'This brain scan does not contain a tumor'
 
-        return jsonify({"result": verdict, "probability": probability}), 200
+        return jsonify({"result": verdict}), 200
     except Exception as e:
         return "An error occurred during image processing: {}".format(e), 500
 
